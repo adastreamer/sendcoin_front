@@ -19,41 +19,41 @@
             <div class="close-cross" onclick="closePopup()"><span>×</span></div>
             <div class="title">Application</div>
             <form method="post" id="app-form" action="javascript:void(null);" onsubmit="reestablP()">
-                <input type="text" name="" placeholder="Name" required>
-                <input type="text" name="" placeholder="Amount" required>
-                <input type="email" name="" placeholder="E-mail" required>
+                <input type="text" name="request[name]" placeholder="Name" required>
+                <input type="text" name="request[amount]" placeholder="Amount" required>
+                <input type="email" name="request[email]" placeholder="E-mail" required>
                 <div id="subm"></dir><button type="submit" >Submit</button></div>
             </form>
 
         </div>
     </div>
-	<nav class="main-block">
+    <nav class="main-block">
         <div class="nav-block">
             <img src="img/SNDlogo.png">
             <div class="logo">SAND COIN</div>
         </div>
         <div class="nav-block">
-            <a class="main-link" href="#">Home</a>
-            <a href="#">My profile</a>
-            <a href="index.html" class="link-lang"><img src="img/RU.png" width="25px" height="13px">
+            <a class="main-link" href="/en">Home</a>
+            <!--<a href="/profile">My profile</a>-->
+            <a href="/" class="link-lang"><img src="img/RU.png" width="25px" height="13px">
             RU
             </a>
             <span class="re">|</span>
-            <a href="index_EN.html" class="main-link-lang link-lang"><img src="img/EN.png"  width="25px" height="13px">EN</a>
+            <a href="/en" class="main-link-lang link-lang"><img src="img/EN.png"  width="25px" height="13px">EN</a>
         </div>   
     </nav>
-	<header class="main-block">
+    <header class="main-block">
         <div class="main-header">
-            <div class="title">The world's first electronic option for high-quality sand</div>
+            <div class="title">The world's first electronic option for sand</div>
             <div class="text">
                 Physical projects, unlike cloud technologies, have great reliability in terms of reinforcement of derivatives with a long history of their existence and an understandable implementation scheme.
             </div>
-            <a href="" class="btn btn-lk">Participate</a>
+            <a href="javascript:" class="btn btn-lk" onclick="popup()">Investment application</a>
         </div> 
         <div class="big-coin"><img src="img/3d 1x.png"></div>    
     </header>
     <div class="border-line"></div>
-	<section class="main-block timer-block">
+    <section class="main-block timer-block">
         <div class="main-title">Pre-ICO</div>
         <div class="timer">
             <div class="timer-block"><script src="http://megatimer.ru/s/ba45ac33f8cef97cdfe2c2ae86814859.js"></script></div>
@@ -74,7 +74,7 @@
         <div class="text-paper">
             Evaluate our project and make sure of the reliability of investments
         </div>
-        <a href="#" class="btn btn-document">Open the document</a>
+        <a href="/WhitePaperSND_en.pdf" target="_blank" class="btn btn-document">Open the document</a>
     </section>
     <section class="main-block road">
         <div class="main-title">Roadmap</div>
@@ -175,14 +175,14 @@
 
     </section>
     <div class="border-line"></div>
-	<footer class="main-block">
+    <footer class="main-block">
         <div>
             <div class="title-footer">We are in social networks:</div>
             <div class="soc-footer">
                 <a target="_blank" href="https://twitter.com/sandcoin"><img src="img/Twitter1x.png"></a>
                 <a target="_blank" href="https://www.facebook.com/cryptosandcoin/"><img src="img/Facebook1x.png"></a>
                 <a target="_blank" href="https://vk.com/sandcoin"><img src="img/vk_logo.png" width="25px"></a>
-                <a target="_blank" href="https://web.telegram.org/#/im?p=@sandcoin"><img src="img/Telegram1x.png"></a>
+                <a target="_blank" href="https://t.me/sandcoinru"><img src="img/Telegram1x.png"></a>
             </div>
         </div>   
         <div class="contacts-footer">
@@ -191,8 +191,7 @@
             <div>Email: <a href="mailto:ico@sandcoin.io">ico@sandcoin.io</a></div>
         </div>   
         <div class="title-footer">
-            <div>Sandcoin, LLC © 2017</div>
-            <a class="nova" target="_blank" href="http://xn--80acbbp8bh.xn--p1ai/">Web-Studio "НоваВеб"</a>
+            <div>Sandcoin © 2017</div>
         </div>
     </footer>
 
@@ -217,40 +216,24 @@
     </div>
 
 
+<script type="text/javascript">
+    $("body").on("click",".close-notify", function(){
+        $(".notify").addClass("close-all")
+    });
 
-    
-
-     <script type="text/javascript">
-        function changeLng(){
-           var str = navigator.language || navigator.browserLanguage;
-           var str1 = "qwe"
-            if((str.indexOf('zh') + 1) || (str.indexOf('ZH') + 1) || (str1.indexOf('zh') + 1) || (str1.indexOf('ZH') + 1)){
-                    $(".zh").removeClass("close-all")
-            }
-
-            str = navigator.language || navigator.browserLanguage;
-            str1 = "qwe"
-            if( (str.indexOf('ru') + 1) || (str.indexOf('RU') + 1) || (str1.indexOf('en') + 1) || (str1.indexOf('EN') + 1)){
-                    $(".ru").removeClass("close-all");
-
-            }
-        }
-        changeLng();
-        $("body").on("click",".close-notify", function(){
-            $(".notify").addClass("close-all")
-        })
-
-        function reestablP() {
-        var form = $("#form").serialize();
+    function reestablP() {
+        var form = $("#app-form").serialize();
         $.ajax({
             type: "POST",
-            url: "/URL/",
+            url: "/create_request",
             data: form,
             success: function () {
-                $('#subm').fadeOut(1).html('<div class="success">all is right</div>').fadeIn("slow");
+                $('#subm').fadeOut(1).html('<div class="success">Все прошло успешно</div>').fadeIn("slow");
+                document.getElementById("app-form").reset();
             },
             error: function () {
                 alert("Ошибка сервера");
+
             }
         });
     }
